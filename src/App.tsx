@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AppProvider, useApp } from "@/contexts/AppContext";
+import { AIProvider } from "@/contexts/AIContext";
 import LoginScreen from "@/components/LoginScreen";
 import LandingPage from "@/components/LandingPage";
 import Layout from "@/components/Layout";
@@ -22,6 +23,9 @@ import EvacuationPractice from "@/pages/student/EvacuationPractice";
 // Admin Pages
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminAnalytics from "@/pages/admin/AdminAnalytics";
+
+// AI Assistant
+import AIAssistant from "@/pages/AIAssistant";
 
 import NotFound from "./pages/NotFound";
 
@@ -66,11 +70,13 @@ const AppContent = () => {
         <Route path="student/evacuation-practice" element={<EvacuationPractice />} />
         <Route path="student/sos" element={<SOSScreen />} />
         <Route path="student/profile" element={<StudentProfile />} />
+        <Route path="student/ai-assistant" element={<AIAssistant />} />
 
         {/* Admin Routes */}
         <Route path="admin" element={<AdminDashboard />} />
         <Route path="admin/drill" element={<AdminDashboard />} />
         <Route path="admin/analytics" element={<AdminAnalytics />} />
+        <Route path="admin/ai-assistant" element={<AIAssistant />} />
 
         {/* Default Route */}
         <Route index element={
@@ -91,7 +97,9 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AppProvider>
-          <AppContent />
+          <AIProvider>
+            <AppContent />
+          </AIProvider>
         </AppProvider>
       </BrowserRouter>
     </TooltipProvider>

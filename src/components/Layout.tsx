@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useApp } from '@/contexts/AppContext';
 import { Button } from '@/components/ui/button';
-import { Home, BookOpen, Siren, User, BarChart3, LogOut, Shield, Map } from 'lucide-react';
+import { Home, BookOpen, Siren, User, BarChart3, LogOut, Shield, Map, Bot } from 'lucide-react';
 
 const Layout = () => {
   const { user, setUser, drillActive } = useApp();
@@ -19,6 +19,7 @@ const Layout = () => {
     { icon: BookOpen, label: 'Modules', path: '/student/modules' },
     { icon: Shield, label: 'Drills', path: '/student/drills' },
     { icon: Map, label: 'Campus Map', path: '/student/campus-map' },
+    { icon: Bot, label: 'AI Assistant', path: '/student/ai-assistant' },
     { icon: Siren, label: 'SOS', path: '/student/sos' },
     { icon: User, label: 'Profile', path: '/student/profile' },
   ];
@@ -27,6 +28,7 @@ const Layout = () => {
     { icon: BarChart3, label: 'Dashboard', path: '/admin' },
     { icon: Shield, label: 'Trigger Drill', path: '/admin/drill' },
     { icon: BookOpen, label: 'Analytics', path: '/admin/analytics' },
+    { icon: Bot, label: 'AI Assistant', path: '/admin/ai-assistant' },
   ];
 
   const navItems = user.role === 'student' ? studentNavItems : adminNavItems;
