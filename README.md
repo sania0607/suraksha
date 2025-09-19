@@ -53,9 +53,10 @@ SafeSchool Ready Spark is a comprehensive web application designed to enhance di
 
 ### Installation
 
-1. **Navigate to the project directory**
+1. **Clone the repository**
    ```bash
-   cd safeschool-ready-spark
+   git clone https://github.com/sania0607/suraksha.git
+   cd suraksha
    ```
 
 2. **Install dependencies**
