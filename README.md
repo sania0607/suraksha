@@ -2,11 +2,7 @@
 
 **Digital Disaster Preparedness Platform for Educational Institutions**
 
-Suraksha is a comprehensive web application designed to enhance disaster preparedness in educational instituFoFor support and questions:
-- 📧 Email: support@suraksha.edu
-- � Community discussions and local supportupport and questions:
-- 📧 Email: support@suraksha.edu
-- � Community discussions and local supportns through interactive training modules, real-time drill simulations, and emergency response systems.
+Suraksha is a comprehensive web application designed to enhance disaster preparedness in educational institution
 
 ![Suraksha Platform](https://img.shields.io/badge/Platform-Suraksha-blue)
 ![React](https://img.shields.io/badge/React-18.3.1-blue)
@@ -20,6 +16,7 @@ Suraksha is a comprehensive web application designed to enhance disaster prepare
 - **Multi-Role Access**: Separate interfaces for students and administrators
 - **Interactive Learning Modules**: Comprehensive disaster preparedness training
 - **Real-time Drill Simulations**: Practice emergency scenarios safely
+- **🤖 AI Assistant**: Powered by Google Gemini for disaster preparedness guidance
 - **SOS Emergency System**: Quick emergency alert and response system
 - **Campus Mapping**: Interactive campus navigation with evacuation routes
 - **Progress Tracking**: Detailed analytics and performance monitoring
@@ -38,6 +35,7 @@ Suraksha is a comprehensive web application designed to enhance disaster prepare
 - Drill simulation practice
 - Emergency evacuation practice
 - Campus map with safe zones
+- **AI-powered disaster assistance** with real-time Q&A
 - SOS emergency alerts
 - Performance analytics
 
@@ -46,7 +44,29 @@ Suraksha is a comprehensive web application designed to enhance disaster prepare
 - System-wide analytics and reporting
 - Drill scheduling and management
 - Emergency alert broadcasting
+- **AI assistant for institutional planning**
 - Performance insights and trends
+
+### 🤖 AI Assistant Features
+**Powered by Google Gemini for Expert Disaster Guidance**
+
+- **Real-time Q&A**: Instant answers to disaster preparedness questions
+- **Emergency Procedures**: Step-by-step guidance for various emergency scenarios
+- **Safety Protocols**: Comprehensive safety procedures and best practices
+- **Evacuation Planning**: AI-guided evacuation plan development
+- **Risk Assessment**: Disaster risk evaluation and mitigation strategies
+- **Training Support**: AI-powered training content and drill guidance
+- **24/7 Availability**: Always-on disaster preparedness expert
+- **Contextual Responses**: Tailored advice for educational institutions
+
+**Supported Emergency Categories:**
+- 🔥 Fire Safety & Evacuation
+- 🌍 Earthquake Response
+- 🌪️ Severe Weather (Tornadoes, Hurricanes)
+- 🌊 Flood Emergencies
+- ⚡ Electrical & Chemical Safety
+- 🏥 Medical Emergencies
+- 🔒 Security & Lockdown Procedures
 
 ## 🚀 Getting Started
 
@@ -72,7 +92,18 @@ Suraksha is a comprehensive web application designed to enhance disaster prepare
    bun install
    ```
 
-3. **Start development server**
+3. **Configure AI Assistant (Optional)**
+   ```bash
+   # Copy environment template
+   cp .env.example .env
+   
+   # Add your Gemini API key to .env
+   VITE_GEMINI_API_KEY=your_api_key_here
+   ```
+   
+   Get your free API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+
+4. **Start development server**
    ```bash
    # Using npm
    npm run dev
@@ -81,7 +112,7 @@ Suraksha is a comprehensive web application designed to enhance disaster prepare
    bun run dev
    ```
 
-4. **Open your browser**
+5. **Open your browser**
    Navigate to `http://localhost:8080` to view the application
 
 ### Available Scripts
