@@ -39,7 +39,7 @@ const Layout = () => {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
               <div className="text-2xl font-bold bg-gradient-hero bg-clip-text text-transparent">
-                🛡️ SafeSchool
+                🛡️ Suraksha
               </div>
               {drillActive && (
                 <div className="bg-emergency text-emergency-foreground px-3 py-1 rounded-full text-sm font-medium emergency-pulse">

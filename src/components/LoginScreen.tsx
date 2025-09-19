@@ -35,7 +35,7 @@ const LoginScreen = () => {
         <CardHeader className="text-center">
           <div className="text-4xl mb-4">🛡️</div>
           <CardTitle className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-            SafeSchool Platform
+            Suraksha Platform
           </CardTitle>
           <CardDescription>
             Digital Disaster Preparedness for Educational Institutions

@@ -1,10 +1,14 @@
-# 🛡️ SafeSchool Ready Spark
+# 🛡️ Suraksha
 
 **Digital Disaster Preparedness Platform for Educational Institutions**
 
-SafeSchool Ready Spark is a comprehensive web application designed to enhance disaster preparedness in educational institutions through interactive training modules, real-time drill simulations, and emergency response systems.
+Suraksha is a comprehensive web application designed to enhance disaster preparedness in educational instituFoFor support and questions:
+- 📧 Email: support@suraksha.edu
+- � Community discussions and local supportupport and questions:
+- 📧 Email: support@suraksha.edu
+- � Community discussions and local supportns through interactive training modules, real-time drill simulations, and emergency response systems.
 
-![SafeSchool Platform](https://img.shields.io/badge/Platform-SafeSchool-blue)
+![Suraksha Platform](https://img.shields.io/badge/Platform-Suraksha-blue)
 ![React](https://img.shields.io/badge/React-18.3.1-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-blue)
 ![Vite](https://img.shields.io/badge/Vite-5.4.19-purple)
@@ -165,7 +169,7 @@ The platform supports role-based access:
 
 ## 📱 Responsive Design
 
-SafeSchool is fully responsive and optimized for:
+Suraksha is fully responsive and optimized for:
 - 📱 Mobile devices (phones, tablets)
 - 💻 Desktop computers
 - 🖥️ Large displays
@@ -200,7 +204,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🆘 Support
 
 For support and questions:
-- 📧 Email: support@safeschool.edu
+- 📧 Email: support@suraksha.edu
 - � Community discussions and local support
 
 ## 🙏 Acknowledgments
@@ -211,4 +215,4 @@ For support and questions:
 
 ---
 
-**SafeSchool Ready Spark** - Preparing tomorrow's leaders for today's challenges 🌟
+**Suraksha** - Preparing tomorrow's leaders for today's challenges 🌟

@@ -44,7 +44,7 @@ const LandingPage = () => {
         <div className="text-center mb-16">
           <div className="text-6xl mb-6">🛡️</div>
           <h1 className="text-5xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
-            SafeSchool Platform
+            Suraksha Platform
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
             Digital Disaster Preparedness for Educational Institutions. 
@@ -76,7 +76,7 @@ const LandingPage = () => {
 
         {/* Benefits Section */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold mb-8">Why Choose SafeSchool?</h2>
+          <h2 className="text-3xl font-bold mb-8">Why Choose Suraksha?</h2>
           <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto">
             {benefits.map((benefit, index) => (
               <div key={index} className="flex items-center space-x-3">
@@ -93,7 +93,7 @@ const LandingPage = () => {
             <CardContent className="p-8">
               <h3 className="text-2xl font-bold mb-4">Ready to Get Started?</h3>
               <p className="text-muted-foreground mb-6">
-                Join thousands of schools already using SafeSchool Platform
+                Join thousands of schools already using Suraksha Platform
               </p>
               <Button 
                 onClick={() => setShowLogin(true)}
