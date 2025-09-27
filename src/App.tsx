@@ -15,6 +15,7 @@ import StudentModules from "@/pages/student/StudentModules";
 import StudentDrills from "@/pages/student/StudentDrills";
 import StudentProfile from "@/pages/student/StudentProfile";
 import ModuleDetail from "@/pages/student/ModuleDetail";
+import ModuleDetailNew from "@/pages/student/ModuleDetailNew";
 import DrillSimulator from "@/pages/student/DrillSimulator";
 import SOSScreen from "@/pages/student/SOSScreen";
 import CampusMap from "@/pages/student/CampusMap";
@@ -63,7 +64,7 @@ const AppContent = () => {
         {/* Student Routes */}
         <Route path="student" element={<StudentHome />} />
         <Route path="student/modules" element={<StudentModules />} />
-        <Route path="student/modules/:moduleId" element={<ModuleDetail />} />
+        <Route path="student/modules/:moduleId" element={<ModuleDetailNew />} />
         <Route path="student/drills" element={<StudentDrills />} />
         <Route path="student/drills/:moduleId" element={<DrillSimulator />} />
         <Route path="student/campus-map" element={<CampusMap />} />

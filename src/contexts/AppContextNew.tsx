@@ -81,14 +81,6 @@ export interface StudentProgress {
   timeSpent: number; // in minutes
 }
 
-export interface Student {
-  id: string;
-  name: string;
-  email: string;
-  profileImage?: string;
-  progress: Record<string, number>;
-}
-
 const dummyUsers = [
   {
     id: 'student-1',
@@ -424,30 +416,20 @@ interface AppContextType {
   modules: DisasterModule[];
   studentProgress: StudentProgress[];
   users: User[];
-  students: Student[];
-  showLogin: boolean;
-  drillActive: boolean;
   setUser: (user: User | null) => void;
-  setShowLogin: (show: boolean) => void;
   updateProgress: (moduleId: string, score: number) => void;
   getModuleProgress: (moduleId: string) => StudentProgress | undefined;
-  triggerSOS: () => void;
-  setDrillActive: (active: boolean) => void;
-  updateStudentScore: (studentId: string, moduleId: string, score: number) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-export const useApp = () => {
+export const useAppContext = () => {
   const context = useContext(AppContext);
   if (context === undefined) {
-    throw new Error('useApp must be used within an AppProvider');
+    throw new Error('useAppContext must be used within an AppProvider');
   }
   return context;
 };
-
-// For backward compatibility
-export const useAppContext = useApp;
 
 interface AppProviderProps {
   children: ReactNode;
@@ -456,8 +438,6 @@ interface AppProviderProps {
 export const AppProvider = ({ children }: AppProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [studentProgress, setStudentProgress] = useState<StudentProgress[]>(dummyStudentProgress);
-  const [showLogin, setShowLogin] = useState(false);
-  const [drillActive, setDrillActiveState] = useState(false);
 
   const updateProgress = (moduleId: string, score: number) => {
     setStudentProgress(prev => {
@@ -484,45 +464,14 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     return studentProgress.find(p => p.moduleId === moduleId);
   };
 
-  const triggerSOS = () => {
-    console.log('🚨 SOS TRIGGERED! Emergency alert sent to all administrators.');
-    alert('SOS Alert Sent! Emergency services and school administrators have been notified.');
-  };
-
-  const setDrillActive = (active: boolean) => {
-    setDrillActiveState(active);
-  };
-
-  const updateStudentScore = (studentId: string, moduleId: string, score: number) => {
-    // Implementation for updating student scores
-  };
-
-  // Mock student data for compatibility
-  const dummyStudents: Student[] = [
-    {
-      id: 'student-1',
-      name: 'Alex Johnson',
-      email: 'alex.johnson@university.edu',
-      profileImage: '/api/placeholder/100/100',
-      progress: { 'earthquake': 95, 'fire': 88, 'flood': 0 }
-    }
-  ];
-
   const value: AppContextType = {
     user,
     modules: dummyModules,
     studentProgress,
     users: dummyUsers,
-    students: dummyStudents,
-    showLogin,
-    drillActive,
     setUser,
-    setShowLogin,
     updateProgress,
-    getModuleProgress,
-    triggerSOS,
-    setDrillActive,
-    updateStudentScore
+    getModuleProgress
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
