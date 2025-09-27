@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '@/contexts/AppContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,16 +16,16 @@ const StudentHome = () => {
   return (
     <div className="space-y-6">
       {/* Welcome Header */}
-      <div className="bg-gradient-hero rounded-lg p-6 text-white">
+      <div className="bg-teal-600 rounded-lg p-6 text-white">
         <h1 className="text-3xl font-bold mb-2">Welcome back, {user?.name}! 👋</h1>
-        <p className="text-white/90 text-lg">Ready to strengthen your disaster preparedness skills?</p>
+        <p className="text-teal-100 text-lg">Ready to strengthen your disaster preparedness skills?</p>
       </div>
 
       {/* Progress Overview */}
-      <Card className="shadow-card">
+      <Card className="shadow-lg bg-white">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <Trophy className="h-5 w-5 text-accent" />
+            <Trophy className="h-5 w-5 text-orange-400" />
             <span>Your Progress</span>
           </CardTitle>
           <CardDescription>Track your disaster preparedness journey</CardDescription>
@@ -43,11 +42,11 @@ const StudentHome = () => {
             
             <div className="flex space-x-4 text-sm">
               <div className="flex items-center space-x-1">
-                <CheckCircle className="h-4 w-4 text-success" />
+                <CheckCircle className="h-4 w-4 text-green-500" />
                 <span>{completedModules.length} Completed</span>
               </div>
               <div className="flex items-center space-x-1">
-                <AlertTriangle className="h-4 w-4 text-accent" />
+                <AlertTriangle className="h-4 w-4 text-orange-400" />
                 <span>{modules.length - completedModules.length} Remaining</span>
               </div>
             </div>
@@ -60,24 +59,24 @@ const StudentHome = () => {
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">Disaster Preparedness Modules</h2>
           <Link to="/student/modules">
-            <Button variant="outline" size="sm">View All</Button>
+            <Button className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg">View All</Button>
           </Link>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {modules.map((module) => {
             const isCompleted = completedModules.includes(module.id);
-            const colorClass = module.color === 'primary' ? 'border-primary/20 hover:border-primary/40' :
-                              module.color === 'emergency' ? 'border-emergency/20 hover:border-emergency/40' :
-                              'border-accent/20 hover:border-accent/40';
+            const colorClass = module.color === 'primary' ? 'border-teal-200 hover:border-teal-400' :
+                              module.color === 'emergency' ? 'border-red-200 hover:border-red-400' :
+                              'border-orange-200 hover:border-orange-400';
             
             return (
-              <Card key={module.id} className={`module-card cursor-pointer ${colorClass} border-2`}>
+              <Card key={module.id} className={`transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer ${colorClass} border-2 bg-white`}>
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <div className="text-3xl">{module.icon}</div>
                     {isCompleted && (
-                      <Badge variant="secondary" className="bg-success/10 text-success border-success/20">
+                      <Badge className="bg-green-100 text-green-600 border-green-200">
                         <CheckCircle className="h-3 w-3 mr-1" />
                         Complete
                       </Badge>
@@ -90,11 +89,13 @@ const StudentHome = () => {
                 <CardContent>
                   <Link to={`/student/modules/${module.id}`}>
                     <Button 
-                      variant={isCompleted ? "success" : "module"} 
-                      className="w-full"
-                      size="sm"
+                      className={`w-full transition-colors duration-200 ${
+                        isCompleted 
+                          ? 'bg-green-500 hover:bg-green-600 text-white' 
+                          : 'bg-teal-600 hover:bg-teal-700 text-white'
+                      }`}
                     >
-                      <Play className="h-4 w-4" />
+                      <Play className="h-4 w-4 mr-2" />
                       {isCompleted ? 'Review Module' : 'Start Module'}
                     </Button>
                   </Link>
@@ -106,7 +107,7 @@ const StudentHome = () => {
       </div>
 
       {/* Quick Actions */}
-      <Card className="shadow-card">
+      <Card className="shadow-lg bg-white">
         <CardHeader>
           <CardTitle>Quick Actions</CardTitle>
           <CardDescription>Emergency tools and practice</CardDescription>
@@ -114,21 +115,21 @@ const StudentHome = () => {
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <Link to="/student/drills">
-              <Button variant="drill" className="w-full h-16 flex-col space-y-1">
+              <Button className="w-full h-16 flex-col space-y-1 bg-blue-500 hover:bg-blue-600 text-white">
                 <AlertTriangle className="h-5 w-5" />
                 <span>Practice Drills</span>
               </Button>
             </Link>
             
             <Link to="/student/sos">
-              <Button variant="emergency" className="w-full h-16 flex-col space-y-1">
+              <Button className="w-full h-16 flex-col space-y-1 bg-red-500 hover:bg-red-600 text-white animate-pulse">
                 <span className="text-2xl">🚨</span>
                 <span className="text-sm">Emergency SOS</span>
               </Button>
             </Link>
             
             <Link to="/student/profile">
-              <Button variant="outline" className="w-full h-16 flex-col space-y-1">
+              <Button className="w-full h-16 flex-col space-y-1 bg-orange-400 hover:bg-orange-500 text-white">
                 <Trophy className="h-5 w-5" />
                 <span>View Profile</span>
               </Button>

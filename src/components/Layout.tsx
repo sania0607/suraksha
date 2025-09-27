@@ -1,4 +1,3 @@
-import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useApp } from '@/contexts/AppContext';
 import { Button } from '@/components/ui/button';
@@ -34,31 +33,35 @@ const Layout = () => {
   const navItems = user.role === 'student' ? studentNavItems : adminNavItems;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-card border-b border-border shadow-soft sticky top-0 z-50">
+      <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
-              <div className="text-2xl font-bold bg-gradient-hero bg-clip-text text-transparent">
-                🛡️ Suraksha
+              <div className="flex items-center space-x-2">
+                <Shield className="h-8 w-8 text-teal-600" />
+                <div className="text-teal-600 font-bold text-xl">Suraksha</div>
               </div>
               {drillActive && (
-                <div className="bg-emergency text-emergency-foreground px-3 py-1 rounded-full text-sm font-medium emergency-pulse">
+                <div className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium animate-pulse">
                   🚨 DRILL ACTIVE
                 </div>
               )}
             </div>
             
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm text-gray-600">
                 Welcome, {user.name}
               </span>
-              <span className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full font-medium">
+              <span className="px-2 py-1 bg-teal-100 text-teal-600 text-xs rounded-full font-medium">
                 {user.role.toUpperCase()}
               </span>
-              <Button variant="ghost" size="sm" onClick={handleLogout}>
-                <LogOut className="h-4 w-4" />
+              <Button 
+                onClick={handleLogout}
+                className="bg-orange-400 hover:bg-orange-500 text-white px-4 py-2 rounded-lg"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
                 Logout
               </Button>
             </div>
@@ -68,7 +71,7 @@ const Layout = () => {
 
       <div className="flex">
         {/* Sidebar Navigation */}
-        <nav className="w-64 bg-card border-r border-border shadow-soft min-h-[calc(100vh-4rem)]">
+        <nav className="w-64 bg-white shadow-sm min-h-[calc(100vh-4rem)]">
           <div className="p-4">
             <ul className="space-y-2">
               {navItems.map((item) => {
@@ -79,10 +82,10 @@ const Layout = () => {
                   <li key={item.path}>
                     <Link
                       to={item.path}
-                      className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-smooth ${
+                      className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                         isActive
-                          ? 'bg-primary text-primary-foreground shadow-soft'
-                          : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
+                          ? 'bg-teal-600 text-white shadow-lg'
+                          : 'text-gray-600 hover:bg-teal-50 hover:text-teal-600'
                       }`}
                     >
                       <Icon className="h-5 w-5" />
@@ -96,7 +99,7 @@ const Layout = () => {
         </nav>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-6 bg-gray-50">
           <Outlet />
         </main>
       </div>
