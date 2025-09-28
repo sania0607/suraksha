@@ -114,7 +114,7 @@ const StudentHome = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Link to="/student/drills">
+            <Link to="/student/virtual-drills">
               <Button className="w-full h-16 flex-col space-y-1 bg-blue-500 hover:bg-blue-600 text-white">
                 <AlertTriangle className="h-5 w-5" />
                 <span>Practice Drills</span>

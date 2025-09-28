@@ -14,7 +14,20 @@ const ModuleDetailNew = () => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [showCongratulations, setShowCongratulations] = useState(false);
 
-  const module = modules.find(m => m.id === moduleId);
+  // Mapping from new module IDs to old module IDs in AppContext
+  const moduleIdMapping: Record<string, string> = {
+    'earthquake-safety': 'earthquake',
+    'flood-safety': 'flood',
+    'fire-prevention': 'fire',
+    'cyclone-preparedness': 'cyclone',
+    'landslide-awareness': 'landslide',
+    'thunderstorm-safety': 'thunderstorm',
+    'heatwave-protection': 'heatwave'
+  };
+
+  // Get the actual module ID to look up in AppContext
+  const actualModuleId = moduleIdMapping[moduleId!] || moduleId;
+  const module = modules.find(m => m.id === actualModuleId);
 
   if (!module) {
     return (
@@ -30,7 +43,7 @@ const ModuleDetailNew = () => {
   }
 
   const getModuleContent = () => {
-    if (moduleId === 'earthquake') {
+    if (actualModuleId === 'earthquake') {
       switch (currentStage) {
         case 1:
           return {
@@ -161,7 +174,7 @@ const ModuleDetailNew = () => {
     const phase = getCurrentPhase();
     
     // Custom questions for each module stage
-    if (moduleId === 'earthquake') {
+    if (actualModuleId === 'earthquake') {
       switch (currentStage) {
         case 1:
           return {

@@ -416,6 +416,144 @@ const dummyModules: DisasterModule[] = [
         ]
       }
     ]
+  },
+  // Additional modules for comprehensive disaster preparedness
+  {
+    id: 'fire',
+    title: 'Fire Safety & Prevention',
+    description: 'Learn fire prevention, detection, and safe evacuation procedures.',
+    icon: '🔥',
+    color: 'danger',
+    phases: {
+      before: {
+        title: 'Fire Prevention',
+        contentFocus: 'Fire hazards identification and prevention methods',
+        format: 'Interactive Checklist',
+        checklist: [
+          { id: 'fire1', item: 'Check smoke detectors monthly', completed: false },
+          { id: 'fire2', item: 'Keep fire extinguisher accessible', completed: false },
+          { id: 'fire3', item: 'Practice evacuation routes', completed: false },
+          { id: 'fire4', item: 'Identify meeting points', completed: false }
+        ]
+      },
+      during: {
+        title: 'Fire Emergency Response',
+        contentFocus: 'Immediate fire response actions',
+        format: 'Step-by-Step Guide',
+        steps: [
+          { id: 'fire-step1', step: 'ALERT', description: 'Activate fire alarm and alert others', location: 'building', animation: 'alert-animation' },
+          { id: 'fire-step2', step: 'EVACUATE', description: 'Use nearest safe exit, stay low if smoke present', location: 'building', animation: 'evacuate-animation' },
+          { id: 'fire-step3', step: 'ASSEMBLE', description: 'Meet at designated assembly point', location: 'outdoors', animation: 'assemble-animation' }
+        ]
+      },
+      after: {
+        title: 'Post-Fire Safety',
+        contentFocus: 'After fire evacuation procedures',
+        format: 'Q&A Section',
+        qaItems: [
+          { id: 'fire-qa1', question: 'What to do after evacuating?', answer: 'Stay at assembly point, account for all persons, wait for fire department clearance.', category: 'evacuation' },
+          { id: 'fire-qa2', question: 'When is it safe to re-enter?', answer: 'Only after fire department gives all-clear signal.', category: 'safety' }
+        ]
+      }
+    },
+    quiz: {
+      questions: [
+        {
+          id: '1',
+          question: 'You smell smoke in the building. What should you do?',
+          options: ['Activate fire alarm and evacuate', 'Investigate the source of smoke', 'Wait for instructions', 'Open windows for ventilation'],
+          correctAnswer: 0,
+          phase: 'during'
+        }
+      ]
+    },
+    drillScenarios: [
+      {
+        id: '1',
+        scenario: 'Fire alarm activated in your building. What should you do?',
+        location: 'building',
+        phase: 'during',
+        choices: [
+          {
+            text: 'Use elevator to evacuate quickly',
+            correct: false,
+            feedback: 'Never use elevators during fire emergencies - use stairs!'
+          },
+          {
+            text: 'Exit using nearest stairwell, stay low if smoke present',
+            correct: true,
+            feedback: 'Correct! Use stairs and stay low to avoid smoke inhalation.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'flood',
+    title: 'Flood Safety & Response',
+    description: 'Learn flood preparedness and safety procedures.',
+    icon: '🌊',
+    color: 'info',
+    phases: {
+      before: {
+        title: 'Flood Preparedness',
+        contentFocus: 'Flood preparation and early warning systems',
+        format: 'Interactive Checklist',
+        checklist: [
+          { id: 'flood1', item: 'Know evacuation routes to higher ground', completed: false },
+          { id: 'flood2', item: 'Prepare emergency supplies', completed: false },
+          { id: 'flood3', item: 'Monitor weather alerts', completed: false }
+        ]
+      },
+      during: {
+        title: 'Flood Response',
+        contentFocus: 'Actions during flood events',
+        format: 'Step-by-Step Guide',
+        steps: [
+          { id: 'flood-step1', step: 'MOVE UP', description: 'Move to highest available floor', location: 'building', animation: 'move-up-animation' },
+          { id: 'flood-step2', step: 'AVOID WATER', description: 'Never walk through flowing water', location: 'outdoors', animation: 'avoid-water-animation' }
+        ]
+      },
+      after: {
+        title: 'Post-Flood Safety',
+        contentFocus: 'Recovery and safety after floods',
+        format: 'Q&A Section',
+        qaItems: [
+          { id: 'flood-qa1', question: 'Is flood water safe?', answer: 'No, flood water can contain contaminants and debris. Avoid contact.', category: 'health' }
+        ]
+      }
+    },
+    quiz: {
+      questions: [
+        {
+          id: '1',
+          question: 'You receive a flood warning. What should you do?',
+          options: ['Move to higher ground immediately', 'Wait and see how bad it gets', 'Go to the basement', 'Drive to lower areas'],
+          correctAnswer: 0,
+          phase: 'before'
+        }
+      ]
+    },
+    drillScenarios: [
+      {
+        id: '1',
+        scenario: 'Flash flood warning issued for your area. What is your immediate action?',
+        location: 'building',
+        phase: 'before',
+        choices: [
+          {
+            text: 'Move to the highest floor available',
+            correct: true,
+            feedback: 'Excellent! Moving to higher ground is the safest approach.'
+          },
+          {
+            text: 'Stay on the ground floor to monitor the situation',
+            correct: false,
+            feedback: 'Dangerous! Always move to higher ground when flooding is possible.'
+          }
+        ]
+      }
+    ]
   }
 ];
 

@@ -11,19 +11,21 @@ import Layout from "@/components/Layout";
 
 // Student Pages
 import StudentHome from "@/pages/student/StudentHome";
-import StudentModules from "@/pages/student/StudentModules";
-import StudentDrills from "@/pages/student/StudentDrills";
 import StudentProfile from "@/pages/student/StudentProfile";
 import ModuleDetail from "@/pages/student/ModuleDetail";
 import ModuleDetailNew from "@/pages/student/ModuleDetailNew";
 import DrillSimulator from "@/pages/student/DrillSimulator";
-import SOSScreen from "@/pages/student/SOSScreen";
 import CampusMap from "@/pages/student/CampusMap";
 import EvacuationPractice from "@/pages/student/EvacuationPractice";
+import EmergencyContacts from "@/pages/student/EmergencyContacts";
+import EmergencyCenter from "@/pages/student/EmergencyCenter";
+import VirtualDrillSimulator from "@/pages/student/VirtualDrillSimulator";
+import MultiDisasterModules from "@/pages/student/MultiDisasterModules";
 
 // Admin Pages
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminAnalytics from "@/pages/admin/AdminAnalytics";
+import AdminAnalyticsDashboard from "@/pages/admin/AdminAnalyticsDashboard";
 
 // AI Assistant
 import AIAssistant from "@/pages/AIAssistant";
@@ -63,18 +65,22 @@ const AppContent = () => {
       <Route path="/" element={<Layout />}>
         {/* Student Routes */}
         <Route path="student" element={<StudentHome />} />
-        <Route path="student/modules" element={<StudentModules />} />
+        <Route path="student/modules" element={<MultiDisasterModules />} />
         <Route path="student/modules/:moduleId" element={<ModuleDetailNew />} />
-        <Route path="student/drills" element={<StudentDrills />} />
+        <Route path="student/virtual-drills" element={<VirtualDrillSimulator />} />
         <Route path="student/drills/:moduleId" element={<DrillSimulator />} />
+        <Route path="student/emergency" element={<EmergencyCenter />} />
+        <Route path="student/emergency-contacts" element={<EmergencyContacts />} />
         <Route path="student/campus-map" element={<CampusMap />} />
         <Route path="student/evacuation-practice" element={<EvacuationPractice />} />
-        <Route path="student/sos" element={<SOSScreen />} />
+        <Route path="student/profile" element={<StudentProfile />} />
+        <Route path="student/ai-assistant" element={<AIAssistant />} />
         <Route path="student/profile" element={<StudentProfile />} />
         <Route path="student/ai-assistant" element={<AIAssistant />} />
 
         {/* Admin Routes */}
         <Route path="admin" element={<AdminDashboard />} />
+        <Route path="admin/analytics-dashboard" element={<AdminAnalyticsDashboard />} />
         <Route path="admin/drill" element={<AdminDashboard />} />
         <Route path="admin/analytics" element={<AdminAnalytics />} />
         <Route path="admin/ai-assistant" element={<AIAssistant />} />

@@ -1,7 +1,7 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useApp } from '@/contexts/AppContext';
 import { Button } from '@/components/ui/button';
-import { Home, BookOpen, Siren, User, BarChart3, LogOut, Shield, Map, Bot } from 'lucide-react';
+import { Home, BookOpen, Siren, User, BarChart3, LogOut, Shield, Map, Bot, Phone, Bell, Play, Layers, AlertTriangle } from 'lucide-react';
 
 const Layout = () => {
   const { user, setUser, drillActive } = useApp();
@@ -16,15 +16,18 @@ const Layout = () => {
   const studentNavItems = [
     { icon: Home, label: 'Home', path: '/student' },
     { icon: BookOpen, label: 'Modules', path: '/student/modules' },
-    { icon: Shield, label: 'Drills', path: '/student/drills' },
+    { icon: Play, label: 'Virtual Drills', path: '/student/virtual-drills' },
+    { icon: AlertTriangle, label: 'Emergency Center', path: '/student/emergency' },
+    { icon: Phone, label: 'Emergency Contacts', path: '/student/emergency-contacts' },
     { icon: Map, label: 'Campus Map', path: '/student/campus-map' },
     { icon: Bot, label: 'AI Assistant', path: '/student/ai-assistant' },
-    { icon: Siren, label: 'SOS', path: '/student/sos' },
+    { icon: User, label: 'Profile', path: '/student/profile' },
     { icon: User, label: 'Profile', path: '/student/profile' },
   ];
 
   const adminNavItems = [
     { icon: BarChart3, label: 'Dashboard', path: '/admin' },
+    { icon: Shield, label: 'Analytics Dashboard', path: '/admin/analytics-dashboard' },
     { icon: Shield, label: 'Trigger Drill', path: '/admin/drill' },
     { icon: BookOpen, label: 'Analytics', path: '/admin/analytics' },
     { icon: Bot, label: 'AI Assistant', path: '/admin/ai-assistant' },

@@ -117,7 +117,7 @@ const ModuleDetail = () => {
                 >
                   Back to Module
                 </Button>
-                <Link to={`/student/drills/${moduleId}`} className="flex-1">
+                <Link to={`/student/virtual-drills`} className="flex-1">
                   <Button variant="drill" className="w-full">
                     Practice Drill
                   </Button>
@@ -296,7 +296,7 @@ const ModuleDetail = () => {
               <CardDescription>Apply your knowledge in realistic scenarios</CardDescription>
             </CardHeader>
             <CardContent>
-              <Link to={`/student/drills/${moduleId}`}>
+              <Link to={`/student/virtual-drills`}>
                 <Button variant="drill" className="w-full">
                   <Play className="h-4 w-4" />
                   Start Drill Simulation

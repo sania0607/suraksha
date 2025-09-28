@@ -30,8 +30,8 @@ const DrillSimulator = () => {
     return (
       <div className="text-center py-12">
         <h2 className="text-2xl font-bold text-muted-foreground">Drill not found</h2>
-        <Link to="/student/drills">
-          <Button variant="outline" className="mt-4">Back to Drills</Button>
+        <Link to="/student/virtual-drills">
+          <Button variant="outline" className="mt-4">Back to Virtual Drills</Button>
         </Link>
       </div>
     );
