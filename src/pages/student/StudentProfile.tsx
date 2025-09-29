@@ -1,5 +1,5 @@
 import React from 'react';
-import { useApp } from '@/contexts/AppContext';
+import { useApp } from '@/contexts/FixedAppContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
@@ -9,6 +9,17 @@ const StudentProfile = () => {
   const { user, modules } = useApp();
 
   if (!user) return null;
+  
+  // Helper function to get module icons
+  const getModuleIcon = (disasterType: string) => {
+    switch (disasterType?.toLowerCase()) {
+      case 'earthquake': return '🏗️';
+      case 'fire': return '🔥';
+      case 'flood': return '🌊';
+      case 'tornado': return '🌪️';
+      default: return '⚠️';
+    }
+  };
 
   // Mock student data (in real app, this would come from API)
   const studentData = {
@@ -104,7 +115,7 @@ const StudentProfile = () => {
               return (
                 <div key={module.id} className="flex items-center justify-between p-4 border rounded-lg">
                   <div className="flex items-center space-x-4">
-                    <div className="text-2xl">{module.icon}</div>
+                    <div className="text-2xl">{getModuleIcon(module.disaster_type)}</div>
                     <div>
                       <h4 className="font-medium">{module.title}</h4>
                       <p className="text-sm text-muted-foreground">{module.description}</p>

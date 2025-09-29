@@ -1,11 +1,13 @@
 import React from 'react';
-import { useApp } from '@/contexts/AppContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Gamepad2, MapPin, Settings, Shield } from 'lucide-react';
 
 const LandingPage = () => {
-  const { setShowLogin } = useApp();
+  // Navigate to login page
+  const navigateToLogin = () => {
+    window.location.href = '/login';
+  };
 
   // Smooth scroll function for navigation
   const scrollToSection = (sectionId: string) => {
@@ -70,7 +72,7 @@ const LandingPage = () => {
             </nav>
 
             <Button 
-              onClick={() => setShowLogin(true)}
+              onClick={navigateToLogin}
               className="bg-orange-400 hover:bg-orange-500 text-white px-6 py-2 rounded-lg"
             >
               Get Started
@@ -98,7 +100,7 @@ const LandingPage = () => {
                 real-time alerts and gamified response skills
               </p>
               <Button 
-                onClick={() => setShowLogin(true)}
+                onClick={navigateToLogin}
                 className="bg-white text-teal-600 hover:bg-gray-100 px-8 py-3 text-lg font-medium rounded-lg"
               >
                 See Features
@@ -194,7 +196,7 @@ const LandingPage = () => {
 
               <div className="mt-8">
                 <Button 
-                  onClick={() => setShowLogin(true)}
+                  onClick={navigateToLogin}
                   className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-3 text-lg font-medium rounded-lg"
                 >
                   Join Our Mission
@@ -267,7 +269,7 @@ const LandingPage = () => {
             Join leading educational institutions in implementing comprehensive disaster preparedness
           </p>
           <Button 
-            onClick={() => setShowLogin(true)}
+            onClick={navigateToLogin}
             className="bg-orange-400 hover:bg-orange-500 text-white px-8 py-4 text-lg font-medium rounded-lg"
           >
             Start Your Journey!

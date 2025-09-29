@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Connection Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .info { background-color: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; }
+        button { margin: 5px; padding: 10px 15px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Backend Connection Debug Tool</h1>
+    <div id="results"></div>
+    
+    <button onclick="testHealth()">Test Health Endpoint</button>
+    <button onclick="testRoot()">Test Root Endpoint</button>
+    <button onclick="testAuth()">Test Auth (expect 401)</button>
+    <button onclick="testDocs()">Test API Docs</button>
+    <button onclick="clearResults()">Clear Results</button>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+        const resultsDiv = document.getElementById('results');
+
+        function addResult(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
+            resultsDiv.insertBefore(div, resultsDiv.firstChild);
+        }
+
+        function clearResults() {
+            resultsDiv.innerHTML = '';
+        }
+
+        async function testEndpoint(endpoint, description) {
+            try {
+                addResult(`Testing ${description}...`, 'info');
+                const response = await fetch(`${API_BASE}${endpoint}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    addResult(`✅ ${description} SUCCESS: ${JSON.stringify(data)}`, 'success');
+                } else {
+                    addResult(`⚠️ ${description} returned ${response.status}: ${JSON.stringify(data)}`, 'error');
+                }
+            } catch (error) {
+                addResult(`❌ ${description} FAILED: ${error.message}`, 'error');
+            }
+        }
+
+        function testHealth() {
+            testEndpoint('/health', 'Health Check');
+        }
+
+        function testRoot() {
+            testEndpoint('/', 'Root Endpoint');
+        }
+
+        function testAuth() {
+            testEndpoint('/api/auth/me', 'Auth Check (should return 401)');
+        }
+
+        function testDocs() {
+            testEndpoint('/docs', 'API Documentation');
+        }
+
+        // Auto-run basic tests on load
+        window.onload = function() {
+            addResult('🚀 Starting connection tests...', 'info');
+            setTimeout(() => testHealth(), 500);
+            setTimeout(() => testRoot(), 1000);
+        }
+    </script>
+</body>
+</html>

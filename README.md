@@ -17,6 +17,7 @@ Suraksha is a comprehensive web application designed to enhance disaster prepare
 - **Interactive Learning Modules**: Comprehensive disaster preparedness training
 - **Real-time Drill Simulations**: Practice emergency scenarios safely
 - **🤖 AI Assistant**: Powered by Google Gemini for disaster preparedness guidance
+- **🌤️ Weather Monitoring**: Real-time weather alerts and environmental hazard tracking
 - **SOS Emergency System**: Quick emergency alert and response system
 - **Campus Mapping**: Interactive campus navigation with evacuation routes
 - **Progress Tracking**: Detailed analytics and performance monitoring
@@ -29,6 +30,15 @@ Suraksha is a comprehensive web application designed to enhance disaster prepare
 - ⚡ Electrical Safety and Hazards
 - 🧪 Chemical Spill Response
 
+### 🌤️ Weather & Environmental Monitoring
+- **Real-time Weather Alerts** via OpenWeatherMap API
+- **Severe Weather Detection**: Thunderstorms, high winds, heavy rain
+- **Air Quality Monitoring**: PM2.5, PM10, O3, NO2 tracking
+- **5-Day Weather Forecast** for disaster preparedness planning
+- **Location-based Monitoring** for specific campus areas
+- **Push Notifications** for critical weather conditions
+- **Safety Recommendations** based on weather conditions
+
 ### 👨‍🎓 Student Features
 - Personal dashboard with progress tracking
 - Interactive quizzes and assessments
@@ -36,6 +46,7 @@ Suraksha is a comprehensive web application designed to enhance disaster prepare
 - Emergency evacuation practice
 - Campus map with safe zones
 - **AI-powered disaster assistance** with real-time Q&A
+- **Weather alerts and environmental monitoring**
 - SOS emergency alerts
 - Performance analytics
 
@@ -45,6 +56,7 @@ Suraksha is a comprehensive web application designed to enhance disaster prepare
 - Drill scheduling and management
 - Emergency alert broadcasting
 - **AI assistant for institutional planning**
+- **Weather-based emergency coordination**
 - Performance insights and trends
 
 ### 🤖 AI Assistant Features

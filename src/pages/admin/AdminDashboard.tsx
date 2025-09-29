@@ -1,5 +1,5 @@
 import React from 'react';
-import { useApp } from '@/contexts/AppContext';
+import { useApp } from '@/contexts/FixedAppContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -8,7 +8,27 @@ import { Users, BookOpen, Shield, TrendingUp, AlertTriangle, CheckCircle } from 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 const AdminDashboard = () => {
-  const { students, modules, drillActive, setDrillActive } = useApp();
+  const { modules, drillActive, setDrillActive } = useApp();
+  
+  // Mock students data for admin dashboard
+  const students = [
+    { id: '1', name: 'Alex Johnson', email: 'alex.johnson@university.edu', preparednessScore: 85, completedModules: ['earthquake', 'fire'] },
+    { id: '2', name: 'Sarah Davis', email: 'sarah.davis@university.edu', preparednessScore: 92, completedModules: ['earthquake', 'fire', 'flood'] },
+    { id: '3', name: 'Mike Chen', email: 'mike.chen@university.edu', preparednessScore: 78, completedModules: ['earthquake'] },
+    { id: '4', name: 'Emma Wilson', email: 'emma.wilson@university.edu', preparednessScore: 95, completedModules: ['earthquake', 'fire', 'flood', 'tornado'] },
+    { id: '5', name: 'David Brown', email: 'david.brown@university.edu', preparednessScore: 88, completedModules: ['earthquake', 'fire', 'flood'] },
+  ];
+  
+  // Helper function to get module icons
+  const getModuleIcon = (disasterType: string) => {
+    switch (disasterType?.toLowerCase()) {
+      case 'earthquake': return '🏗️';
+      case 'fire': return '🔥';
+      case 'flood': return '🌊';
+      case 'tornado': return '🌪️';
+      default: return '⚠️';
+    }
+  };
 
   // Calculate statistics
   const totalStudents = students.length;
@@ -223,7 +243,7 @@ const AdminDashboard = () => {
                         {student.completedModules.includes(module.id) ? (
                           <CheckCircle className="h-3 w-3" />
                         ) : (
-                          module.icon
+                          <span>{getModuleIcon(module.disaster_type)}</span>
                         )}
                       </div>
                     ))}

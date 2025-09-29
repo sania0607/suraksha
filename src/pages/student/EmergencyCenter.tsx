@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useApp } from '@/contexts/AppContext';
+import { useApp } from '@/contexts/FixedAppContext';
+import { useWeather } from '@/contexts/WeatherContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -16,12 +17,16 @@ import {
   Phone,
   Users,
   CheckCircle,
-  Siren
+  Siren,
+  Cloud,
+  CloudRain,
+  Wind,
+  Thermometer
 } from 'lucide-react';
 
 interface DisasterAlert {
   id: string;
-  type: 'earthquake' | 'flood' | 'fire' | 'cyclone' | 'tsunami' | 'other';
+  type: 'earthquake' | 'flood' | 'fire' | 'cyclone' | 'tsunami' | 'weather' | 'other';
   severity: 'low' | 'medium' | 'high' | 'critical';
   title: string;
   message: string;
@@ -30,10 +35,13 @@ interface DisasterAlert {
   source: string;
   isActive: boolean;
   actionRequired?: string;
+  weatherType?: 'thunderstorm' | 'wind' | 'rain' | 'snow' | 'fog' | 'air_quality';
+  recommendations?: string[];
 }
 
 const EmergencyCenter = () => {
   const { triggerSOS } = useApp();
+  const { weatherAlerts, weatherData, isMonitoring } = useWeather();
   
   // SOS State
   const [sosTriggered, setSosTriggered] = useState(false);
@@ -70,6 +78,54 @@ const EmergencyCenter = () => {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [filter, setFilter] = useState<'all' | DisasterAlert['severity']>('all');
 
+  // Convert weather alerts to disaster alerts format
+  const convertWeatherAlerts = (): DisasterAlert[] => {
+    if (!weatherAlerts) return [];
+    
+    return weatherAlerts
+      .filter(alert => alert.isActive)
+      .map(weatherAlert => {
+        let weatherType: DisasterAlert['weatherType'] = 'air_quality';
+        
+        // Map weather alert types to weather types
+        if (weatherAlert.type === 'weather_alert') {
+          if (weatherAlert.title.toLowerCase().includes('thunder')) weatherType = 'thunderstorm';
+          else if (weatherAlert.title.toLowerCase().includes('wind')) weatherType = 'wind';
+          else if (weatherAlert.title.toLowerCase().includes('rain')) weatherType = 'rain';
+          else if (weatherAlert.title.toLowerCase().includes('snow')) weatherType = 'snow';
+          else if (weatherAlert.title.toLowerCase().includes('fog')) weatherType = 'fog';
+          else weatherType = 'thunderstorm'; // default for weather alerts
+        } else if (weatherAlert.type === 'severe_weather') {
+          if (weatherAlert.title.toLowerCase().includes('wind')) weatherType = 'wind';
+          else if (weatherAlert.title.toLowerCase().includes('rain')) weatherType = 'rain';
+          else if (weatherAlert.title.toLowerCase().includes('snow')) weatherType = 'snow';
+          else if (weatherAlert.title.toLowerCase().includes('fog')) weatherType = 'fog';
+          else weatherType = 'thunderstorm';
+        }
+        
+        return {
+          id: `weather-${weatherAlert.id}`,
+          type: 'weather' as const,
+          severity: weatherAlert.severity as DisasterAlert['severity'],
+          title: weatherAlert.title,
+          message: weatherAlert.message,
+          location: weatherAlert.location,
+          timestamp: weatherAlert.startTime,
+          source: 'OpenWeatherMap API',
+          isActive: weatherAlert.isActive,
+          actionRequired: weatherAlert.recommendations.length > 0 ? weatherAlert.recommendations[0] : undefined,
+          weatherType,
+          recommendations: weatherAlert.recommendations
+        };
+      });
+  };
+
+  // Combine weather alerts with disaster alerts
+  const allAlerts = [
+    ...alerts,
+    ...convertWeatherAlerts()
+  ];
+
   // SOS Functions
   const handleSOSPress = () => {
     setCountdown(3);
@@ -105,7 +161,22 @@ const EmergencyCenter = () => {
     fire: '🔥',
     cyclone: '🌪️',
     tsunami: '🌊',
+    weather: '🌤️',
     other: '⚠️'
+  };
+
+  const getWeatherIcon = (weatherType?: DisasterAlert['weatherType']) => {
+    if (!weatherType) return '🌤️';
+    
+    switch (weatherType) {
+      case 'thunderstorm': return '⛈️';
+      case 'wind': return '💨';
+      case 'rain': return '🌧️';
+      case 'snow': return '❄️';
+      case 'fog': return '🌫️';
+      case 'air_quality': return '😷';
+      default: return '🌤️';
+    }
   };
 
   const formatTimeAgo = (timestamp: Date) => {
@@ -124,12 +195,18 @@ const EmergencyCenter = () => {
   };
 
   const dismissAlert = (id: string) => {
-    setAlerts(alerts.map(alert => 
-      alert.id === id ? { ...alert, isActive: false } : alert
-    ));
+    if (id.startsWith('weather-')) {
+      // For weather alerts, we can't dismiss them from the weather service
+      // Instead, we'll filter them out locally (they'll reappear on next update)
+      setAlerts(alerts.filter(alert => alert.id !== id));
+    } else {
+      setAlerts(alerts.map(alert => 
+        alert.id === id ? { ...alert, isActive: false } : alert
+      ));
+    }
   };
 
-  const filteredAlerts = alerts.filter(alert => 
+  const filteredAlerts = allAlerts.filter(alert => 
     alert.isActive && (filter === 'all' || alert.severity === filter)
   );
 
@@ -160,6 +237,11 @@ const EmergencyCenter = () => {
             {activeAlertsCount > 0 && (
               <Badge className="bg-white text-red-600 text-lg px-3 py-1">
                 {activeAlertsCount} Active Alerts
+                {weatherAlerts.length > 0 && (
+                  <span className="ml-2 text-blue-600">
+                    • {weatherAlerts.length} Weather
+                  </span>
+                )}
               </Badge>
             )}
             <Button
@@ -190,6 +272,37 @@ const EmergencyCenter = () => {
                 className="ml-auto bg-red-600 hover:bg-red-700 text-white px-6 py-2"
               >
                 {countdown > 0 ? `SOS in ${countdown}` : 'ACTIVATE SOS'}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Weather Monitoring Status */}
+      {(weatherAlerts.length > 0 || (isMonitoring && weatherData)) && (
+        <Card className="border-blue-200 bg-blue-50">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <Cloud className="w-6 h-6 text-blue-600" />
+                <div>
+                  <h3 className="font-semibold text-blue-800">Weather Monitoring Active</h3>
+                  <p className="text-blue-700 text-sm">
+                    {weatherAlerts.length > 0 
+                      ? `${weatherAlerts.length} weather alert${weatherAlerts.length > 1 ? 's' : ''} detected`
+                      : `Monitoring ${weatherData?.location.name || 'your area'} for severe weather conditions`
+                    }
+                  </p>
+                </div>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => window.open('/student/weather-alerts', '_blank')}
+                className="text-blue-600 border-blue-300 hover:bg-blue-100"
+              >
+                <Cloud className="w-4 h-4 mr-2" />
+                View Details
               </Button>
             </div>
           </CardContent>
@@ -299,7 +412,7 @@ const EmergencyCenter = () => {
 
         <TabsContent value="alerts" className="space-y-6">
           {/* Filter Buttons */}
-          <div className="flex space-x-2">
+          <div className="flex flex-wrap gap-2">
             {['all', 'critical', 'high', 'medium', 'low'].map((level) => (
               <Button
                 key={level}
@@ -311,11 +424,19 @@ const EmergencyCenter = () => {
                 {level}
                 {level !== 'all' && (
                   <Badge variant="secondary" className="ml-2">
-                    {alerts.filter(a => a.isActive && a.severity === level).length}
+                    {allAlerts.filter(a => a.isActive && a.severity === level).length}
                   </Badge>
                 )}
               </Button>
             ))}
+            
+            {/* Weather monitoring status */}
+            {isMonitoring && (
+              <Badge variant="outline" className="ml-2">
+                <Cloud className="w-3 h-3 mr-1" />
+                Weather Monitoring Active
+              </Badge>
+            )}
           </div>
 
           {/* Alerts List */}
@@ -338,19 +459,25 @@ const EmergencyCenter = () => {
                 }`}>
                   <CardContent className="p-6">
                     <div className="flex justify-between items-start">
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-3 mb-3">
-                          <span className="text-2xl">{typeEmojis[alert.type]}</span>
-                          <Badge className={severityColors[alert.severity]}>
-                            {alert.severity.toUpperCase()}
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-3 mb-3">
+                        <span className="text-2xl">
+                          {alert.type === 'weather' ? getWeatherIcon(alert.weatherType) : typeEmojis[alert.type]}
+                        </span>
+                        <Badge className={severityColors[alert.severity]}>
+                          {alert.severity.toUpperCase()}
+                        </Badge>
+                        {alert.type === 'weather' && (
+                          <Badge variant="outline" className="text-xs">
+                            <Cloud className="w-3 h-3 mr-1" />
+                            WEATHER ALERT
                           </Badge>
-                          <div className="flex items-center text-sm text-gray-600">
-                            <Clock className="w-4 h-4 mr-1" />
-                            {formatTimeAgo(alert.timestamp)}
-                          </div>
+                        )}
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Clock className="w-4 h-4 mr-1" />
+                          {formatTimeAgo(alert.timestamp)}
                         </div>
-
-                        <h3 className="text-xl font-bold mb-2">{alert.title}</h3>
+                      </div>                        <h3 className="text-xl font-bold mb-2">{alert.title}</h3>
                         <p className="text-gray-700 mb-3">{alert.message}</p>
 
                         <div className="flex items-center space-x-4 text-sm text-gray-600 mb-3">
@@ -376,6 +503,21 @@ const EmergencyCenter = () => {
                             <p className="text-sm">{alert.actionRequired}</p>
                           </div>
                         )}
+
+                        {/* Weather-specific recommendations */}
+                        {alert.type === 'weather' && alert.recommendations && alert.recommendations.length > 1 && (
+                          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3">
+                            <h4 className="font-semibold text-blue-800 mb-2">🌤️ Weather Safety Recommendations:</h4>
+                            <ul className="text-sm text-blue-700 space-y-1">
+                              {alert.recommendations.slice(0, 4).map((rec, index) => (
+                                <li key={index} className="flex items-start">
+                                  <span className="mr-2">•</span>
+                                  <span>{rec}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
                       </div>
 
                       <Button
@@ -383,6 +525,7 @@ const EmergencyCenter = () => {
                         size="sm"
                         onClick={() => dismissAlert(alert.id)}
                         className="text-gray-500 hover:text-gray-700"
+                        title={alert.type === 'weather' ? "Hide weather alert (will reappear if still active)" : "Dismiss alert"}
                       >
                         <X className="w-4 h-4" />
                       </Button>
@@ -439,6 +582,19 @@ const EmergencyCenter = () => {
                 <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                   <h4 className="font-semibold text-blue-800 mb-2">🚑 Medical Emergency</h4>
                   <p className="text-blue-700 text-sm">Call 108, provide first aid if trained, don't move injured person unless necessary</p>
+                </div>
+                
+                <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                  <h4 className="font-semibold text-purple-800 mb-2">🌤️ Severe Weather</h4>
+                  <p className="text-purple-700 text-sm">
+                    Monitor weather alerts, avoid outdoor activities during storms, seek shelter for high winds, 
+                    stay indoors during poor air quality
+                  </p>
+                  {isMonitoring && (
+                    <p className="text-purple-600 text-xs mt-2">
+                      ✅ Weather monitoring is active for your area
+                    </p>
+                  )}
                 </div>
               </div>
             </CardContent>

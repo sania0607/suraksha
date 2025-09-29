@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
-import { useApp } from '@/contexts/AppContext';
+import { useApp } from '@/contexts/FixedAppContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Play, CheckCircle, AlertTriangle, Trophy } from 'lucide-react';
+import WeatherWidget from '@/components/WeatherWidget';
 
 const StudentHome = () => {
   const { user, modules } = useApp();
@@ -66,15 +67,30 @@ const StudentHome = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {modules.map((module) => {
             const isCompleted = completedModules.includes(module.id);
-            const colorClass = module.color === 'primary' ? 'border-teal-200 hover:border-teal-400' :
-                              module.color === 'emergency' ? 'border-red-200 hover:border-red-400' :
-                              'border-orange-200 hover:border-orange-400';
+            // Default styling since color property doesn't exist
+            const colorClass = 'border-teal-200 hover:border-teal-400';
+            
+            // Default icons for different disaster types
+            const getModuleIcon = (disasterType: string) => {
+              switch (disasterType.toLowerCase()) {
+                case 'earthquake':
+                  return '🏗️';
+                case 'fire':
+                  return '🔥';
+                case 'flood':
+                  return '🌊';
+                case 'tornado':
+                  return '🌪️';
+                default:
+                  return '⚠️';
+              }
+            };
             
             return (
               <Card key={module.id} className={`transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer ${colorClass} border-2 bg-white`}>
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
-                    <div className="text-3xl">{module.icon}</div>
+                    <div className="text-3xl">{getModuleIcon(module.disaster_type)}</div>
                     {isCompleted && (
                       <Badge className="bg-green-100 text-green-600 border-green-200">
                         <CheckCircle className="h-3 w-3 mr-1" />
@@ -107,36 +123,44 @@ const StudentHome = () => {
       </div>
 
       {/* Quick Actions */}
-      <Card className="shadow-lg bg-white">
-        <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
-          <CardDescription>Emergency tools and practice</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Link to="/student/virtual-drills">
-              <Button className="w-full h-16 flex-col space-y-1 bg-blue-500 hover:bg-blue-600 text-white">
-                <AlertTriangle className="h-5 w-5" />
-                <span>Practice Drills</span>
-              </Button>
-            </Link>
-            
-            <Link to="/student/sos">
-              <Button className="w-full h-16 flex-col space-y-1 bg-red-500 hover:bg-red-600 text-white animate-pulse">
-                <span className="text-2xl">🚨</span>
-                <span className="text-sm">Emergency SOS</span>
-              </Button>
-            </Link>
-            
-            <Link to="/student/profile">
-              <Button className="w-full h-16 flex-col space-y-1 bg-orange-400 hover:bg-orange-500 text-white">
-                <Trophy className="h-5 w-5" />
-                <span>View Profile</span>
-              </Button>
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Weather Widget */}
+        <div className="lg:col-span-1">
+          <WeatherWidget />
+        </div>
+        
+        {/* Quick Actions */}
+        <Card className="lg:col-span-2 shadow-lg bg-white">
+          <CardHeader>
+            <CardTitle>Quick Actions</CardTitle>
+            <CardDescription>Emergency tools and practice</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <Link to="/student/virtual-drills">
+                <Button className="w-full h-16 flex-col space-y-1 bg-blue-500 hover:bg-blue-600 text-white">
+                  <AlertTriangle className="h-5 w-5" />
+                  <span>Practice Drills</span>
+                </Button>
+              </Link>
+              
+              <Link to="/student/sos">
+                <Button className="w-full h-16 flex-col space-y-1 bg-red-500 hover:bg-red-600 text-white animate-pulse">
+                  <span className="text-2xl">🚨</span>
+                  <span className="text-sm">Emergency SOS</span>
+                </Button>
+              </Link>
+              
+              <Link to="/student/profile">
+                <Button className="w-full h-16 flex-col space-y-1 bg-orange-400 hover:bg-orange-500 text-white">
+                  <Trophy className="h-5 w-5" />
+                  <span>View Profile</span>
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

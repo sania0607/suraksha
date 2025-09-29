@@ -1,12 +1,62 @@
 import React from 'react';
-import { useApp } from '@/contexts/AppContext';
+import { useApp } from '@/contexts/FixedAppContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, Users, Target, Clock, Award, AlertTriangle } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
 
 const AdminAnalytics = () => {
-  const { students, modules } = useApp();
+  const { modules } = useApp();
+  
+  // Mock students data for analytics
+  const students = [
+    { 
+      id: '1', 
+      name: 'Alex Johnson', 
+      quizScores: { earthquake: 85, fire: 90 },
+      completedModules: ['earthquake', 'fire'],
+      preparednessScore: 87
+    },
+    { 
+      id: '2', 
+      name: 'Sarah Davis', 
+      quizScores: { earthquake: 92, fire: 88, flood: 95 },
+      completedModules: ['earthquake', 'fire', 'flood'],
+      preparednessScore: 92
+    },
+    { 
+      id: '3', 
+      name: 'Mike Chen', 
+      quizScores: { earthquake: 78 },
+      completedModules: ['earthquake'],
+      preparednessScore: 78
+    },
+    { 
+      id: '4', 
+      name: 'Emma Wilson', 
+      quizScores: { earthquake: 95, fire: 93, flood: 89, tornado: 91 },
+      completedModules: ['earthquake', 'fire', 'flood', 'tornado'],
+      preparednessScore: 95
+    },
+    { 
+      id: '5', 
+      name: 'David Brown', 
+      quizScores: { earthquake: 88, fire: 85, flood: 92 },
+      completedModules: ['earthquake', 'fire', 'flood'],
+      preparednessScore: 88
+    },
+  ];
+  
+  // Helper function to get module icons
+  const getModuleIcon = (disasterType: string) => {
+    switch (disasterType?.toLowerCase()) {
+      case 'earthquake': return '🏗️';
+      case 'fire': return '🔥';
+      case 'flood': return '🌊';
+      case 'tornado': return '🌪️';
+      default: return '⚠️';
+    }
+  };
 
   // Mock analytics data (in real app, this would come from API)
   const participationTrend = [
@@ -206,7 +256,7 @@ const AdminAnalytics = () => {
             {moduleEngagement.map((module, index) => (
               <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
                 <div className="flex items-center space-x-4">
-                  <div className="text-2xl">{modules[index].icon}</div>
+                  <div className="text-2xl">{getModuleIcon(modules[index]?.disaster_type)}</div>
                   <div>
                     <h4 className="font-medium">{module.name}</h4>
                     <p className="text-sm text-muted-foreground">

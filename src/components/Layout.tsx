@@ -1,16 +1,16 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { useApp } from '@/contexts/AppContext';
+import { useApp } from '@/contexts/FixedAppContext';
 import { Button } from '@/components/ui/button';
-import { Home, BookOpen, Siren, User, BarChart3, LogOut, Shield, Map, Bot, Bell, Play, Layers, AlertTriangle } from 'lucide-react';
+import { Home, BookOpen, Siren, User, BarChart3, LogOut, Shield, Map, Bot, Bell, Play, Layers, AlertTriangle, Cloud } from 'lucide-react';
 
 const Layout = () => {
-  const { user, setUser, drillActive } = useApp();
+  const { user, logout } = useApp();
   const location = useLocation();
 
   if (!user) return null;
 
-  const handleLogout = () => {
-    setUser(null);
+  const handleLogout = async () => {
+    await logout();
   };
 
   const studentNavItems = [
@@ -18,6 +18,7 @@ const Layout = () => {
     { icon: BookOpen, label: 'Modules', path: '/student/modules' },
     { icon: Play, label: 'Virtual Drills', path: '/student/virtual-drills' },
     { icon: AlertTriangle, label: 'Emergency Center', path: '/student/emergency' },
+    { icon: Cloud, label: 'Weather Alerts', path: '/student/weather-alerts' },
     { icon: Map, label: 'Campus Map', path: '/student/campus-map' },
     { icon: Bot, label: 'AI Assistant', path: '/student/ai-assistant' },
     { icon: User, label: 'Profile', path: '/student/profile' },
@@ -44,11 +45,6 @@ const Layout = () => {
                 <Shield className="h-8 w-8 text-teal-600" />
                 <div className="text-teal-600 font-bold text-xl">Suraksha</div>
               </div>
-              {drillActive && (
-                <div className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium animate-pulse">
-                  🚨 DRILL ACTIVE
-                </div>
-              )}
             </div>
             
             <div className="flex items-center space-x-4">
